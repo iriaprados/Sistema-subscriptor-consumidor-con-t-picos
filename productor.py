@@ -1,6 +1,7 @@
 import rabbitpy
 from time import sleep
 
+
 def productor(name, topic): 
     conexion = rabbitpy.Connection('amqp://guest:guest@localhost:5672/%2F')
     channel = conexion.channel()
@@ -14,7 +15,7 @@ def productor(name, topic):
     cola.declare()
     cola.bind(exchange, topic)
 
-    print(f"[{name}] Productor enviando mensajes al topic '{topic}'...")
+    print(f" El {name} ha enviando el mensajes al topic {topic}...")
 
     contador = 1  # Inicializar el contador
 
@@ -22,14 +23,14 @@ def productor(name, topic):
     try: 
         while True: 
             # Crear el contenido del mensaje con el contador y la información solicitada
-            contenido = f"Productor: {name}, Topic: {topic}, Mensaje: Información relevante, Contador: {contador}"
+            contenido = f"Mensaje {contador}, del productor {name} en el tópico {topic}"
             
             # Crear el mensaje en RabbitMQ
             mensaje = rabbitpy.Message(channel, contenido)
 
             # Publicar el mensaje en el exchange usando el topic como clave de enrutamiento
             mensaje.publish(exchange, topic)
-            print(f"{name} ha enviado el mensaje: '{contenido}'")
+            print(f"El mensaje {contador}: '{contenido}'")
                 
             contador += 1  # Incrementar el contador en cada mensaje enviado
             sleep(1)  # Esperar un segundo antes de enviar otro mensaje
@@ -41,3 +42,4 @@ def productor(name, topic):
         # Cerrar el canal y la conexión al finalizar
         channel.close()
         conexion.close()
+
