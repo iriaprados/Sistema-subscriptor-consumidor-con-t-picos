@@ -17,9 +17,12 @@ def consumidor(topic):
 
             while True:
                 print('Revisando el contenido de la cola...')
-                print(f'no se que hace esto {queue.consume_messages()}')
+               
                 for mensaje in queue.consume_messages():
-                    print(f'Se ha recibido el topic {mensaje.body}')
+                    print(f"\n[Consumidor][{time.strftime('%Y-%m-%d %H:%M:%S')}] | Topic: '{topic}' | Recibido: {mensaje.body.decode('utf-8')}")
+                    # print(f'Se ha recibido el topic {mensaje.body}')
                     mensaje.ack()
                 
                 time.sleep(5)  # Esperar cinco segundos antes de revisar de nuevo
+
+ 

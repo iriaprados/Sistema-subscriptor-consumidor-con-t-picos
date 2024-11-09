@@ -27,7 +27,6 @@ def menu():
                 hilo =threading.Thread(target= productor, args=(nproductop, topic))
                 hilo.start()
                 hilos_productor.append(hilo)
-                print('El hilo ha iniciado el topic {topic}')
             else: 
                 print('Topic no válido, debe seleccionar entre: deportes, noticias o tiempo')
 
