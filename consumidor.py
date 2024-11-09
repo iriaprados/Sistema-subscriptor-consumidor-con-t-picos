@@ -1,9 +1,14 @@
+# CONSUMIDOR  
+
+# IMPORTAR LIBRERÍAS
 import time
 import rabbitpy
 
-def consumidor(topic):
-    with rabbitpy.Connection() as conexion:
-        with conexion.channel() as channel:
+# FUNCIÓN PARA EL CONSUMIDOR 
+def consumidor(topic): # Añadir como argumento el topic seleccionado
+    with rabbitpy.Connection() as conexion: # Establecer conexión con rabbitpy
+        with conexion.channel() as channel: # Abrir canales de la comunicación 
+
             # Declarar el exchange de tipo topic
             exchange = rabbitpy.Exchange(channel, 'exchange_topic', exchange_type='topic')
             exchange.declare()
@@ -18,10 +23,9 @@ def consumidor(topic):
             while True:
                 print('Revisando el contenido de la cola...')
                
-                for mensaje in queue.consume_messages():
+                for mensaje in queue.consume_messages(): # Extrear mensaje de la cola uno por uno 
                     print(f"\n[Consumidor][{time.strftime('%Y-%m-%d %H:%M:%S')}] | Topic: '{topic}' | Recibido: {mensaje.body.decode('utf-8')}")
-                    # print(f'Se ha recibido el topic {mensaje.body}')
-                    mensaje.ack()
+                    mensaje.ack() # Revisar el envio correcto del mensaje 
                 
                 time.sleep(5)  # Esperar cinco segundos antes de revisar de nuevo
 
