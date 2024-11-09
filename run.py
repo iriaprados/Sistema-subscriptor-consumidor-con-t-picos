@@ -1,39 +1,37 @@
-import rabbitpy
 import threading
-from consumidor import consumidor 
-from productor import productor
+import rabbitpy
+from time import sleep
+from productor import productor 
+from consumidor import consumidor
 
+# exchange= rabbitpy.Exchange(channel, 'exchange_topic', exchange_type='topic')
 
-# Introducir para cargar el servidor rabbitmq: docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.12-management 
+def menu(): 
+    while True: 
+        print('\nSeleccione un opción:')
+        print('\n1. Enviar mensaje. \n2. Recibir mensaje. \n3. Salir.')
+        opcion= input('\nOpción: ')
 
+        if opcion == '1': 
+            nproductop= input('Añade el nombre del productor: ')
+            topic= input('Elige un topic: ')
+            if topic in ['deportes', 'noticias', 'tiempo']:
+                threading.Thread(target= productor, args=(nproductop, topic)).start()
+            else: 
+                print('Topic no válido, debe seleccionar entre: deportes, noticias o tiempo')
 
-def configuracion(topics): 
-    conexion = rabbitpy.Connection('amqp://guest:guest@localhost:5672/%2F')
-    channel = conexion.channel()
+        elif opcion == '2': 
+            topic= input('Elige un topic: ')
+            if topic in ['deportes', 'noticias', 'tiempo']:
+                threading.Thread(target= consumidor, args=(topic, )).start()
+            else:
+                print('Topic no válido, debe seleccionar entre: deportes, noticias o tiempo')
+                
+        elif opcion == '3': 
+            print('Se ha seleccionado salirse del programa ...')
+            return
+        else: 
+            print('La opción seleccionada debe estar entre el 1 y el 3. Intentelo de nuevo')
 
-    try: 
-        exchange= rabbitpy.Exchange(channel, 'exchange_topic', exchange_type='topic')
-        exchange.declare()
-
-        print('')
-        for topic in topics: 
-            cola= rabbitpy.Queue(channel, topic)
-            cola.declare()
-            cola.bind(exchange, topic)
-            print(f'La cola de {topic}, se ha configurado y enlazado con {exchange.name}')
-        print(' ')
-           
-
-    except Exception as e:
-        print(f'Error en la configuración de Exchange o de las colas: {e}')
-    finally: 
-        channel.close()
-        conexion.close()
-
-
-if __name__ == '__main__': 
-    temas= ['Deportes', 'Noticas', 'Tiempo']
-
-    configuracion(temas)
-    for tema in temas: 
-        threading.Thread(target=productor, args=(f'productor1',tema)).start()
+if __name__ == "__main__": 
+    menu()
