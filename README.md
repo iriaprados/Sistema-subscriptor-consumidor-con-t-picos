@@ -7,6 +7,7 @@ Para la ejecución correcta de este proyecto es necesaro:
 - La imagen de RabbitMQ, de la consola activada.
 ### Instalación y configuración de RabbitMQ 
 Para iniciar RabbitMQ en Docker, ejecuta el siguiente comando en tu terminal:
+
 **docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.12-management**
 
 Este comando inicia un contenedor de RabbitMQ que expone los puertos necesarios. 
