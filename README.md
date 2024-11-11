@@ -63,7 +63,8 @@ Seleccione una opción:
 2. Recibir mensajes
 3. Salir
 > 1
-Ingrese el nombre del productor: Productor_1
+
+Ingrese el nombre del productor: productor1
 Ingrese el topic: noticias 
 
 Para ejecutar un **consumidor**: 
@@ -72,6 +73,7 @@ Seleccione una opción:
 2. Recibir mensajes
 3. Salir
 > 2
+
 Ingrese el topic: noticias
 
 
