@@ -55,7 +55,7 @@ Para iniciar el programa, ejecuta el archivo principal (main.py). En el menú in
 - Si seleccionas **3**, el programa se cierra.
 - Si seleccionas una **opción no válida**, el menú te volverá a preguntar
 
-## Ejemplo de uso 
+### Ejemplo de uso 
 Para ejecutar un **productor**:
 
 Seleccione una opción:
